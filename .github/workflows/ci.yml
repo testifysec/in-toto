@@ -43,10 +43,9 @@ jobs:
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 
         with:
           repository: 'testifysec/witness'
-          run: pwd
 
       - name: Run Witness
-        run: cd witness && ./witness version
+        run: pwd && ls -la && ./witness version
         working-directory: /witness
 
       - name: Verify it Witness was installed
