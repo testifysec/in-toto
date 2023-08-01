@@ -39,9 +39,11 @@ jobs:
         run: tox -e ${{ matrix.toxenv }}
 
       # Checkout witness repository and run tests
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.python-version }}
-        uses: actions/setup-node@v3
+      - name: witness install
+        uses: testifysec/witness-run-action@v0.1.2
         with:
-          node-version: ${{ matrix.python-version }}
-          cache: 'npm'
+          step: install
+          enable-archivista: true
+          enable-sigstore: true
+          product-exclude-glob: '{web/node_modules/**,node_modules/**}'
+          command: witness version
