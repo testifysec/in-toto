@@ -45,8 +45,8 @@ jobs:
           repository: 'testifysec/witness'
 
       - name: Run Witness
-        run: pwd && ls -la && ./witness version
-        working-directory: /witness
+        run: ls ./repo
+        working-directory: ./repo
 
       - name: Verify it Witness was installed
         run: ./witness version
