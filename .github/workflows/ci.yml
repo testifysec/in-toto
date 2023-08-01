@@ -45,7 +45,7 @@ jobs:
           repository: 'testifysec/witness'
 
       - name: Run Witness
-        run: ls home/runner/work/in-toto/in-toto/
+        run: ls -la
 
       - name: Verify it Witness was installed
         run: ./witness version
