@@ -44,9 +44,8 @@ jobs:
         with:
           repository: 'testifysec/witness'
 
-      - name: Run Witness
-        run: ls -la
+      - name: Install Witness
+        run: ./install-witness.sh
 
       - name: Verify it Witness was installed
         run: ./witness version
-        working-directory: /witness
