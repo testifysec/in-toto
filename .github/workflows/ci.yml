@@ -45,7 +45,7 @@ jobs:
           repository: 'testifysec/witness'
 
       - name: Install Witness
-        run: chmod +x install-witness.sh
+        run: chmod +x install-witness.sh && ./install-witness.sh
 
       - name: Verify it Witness was installed
         run: ./witness version
