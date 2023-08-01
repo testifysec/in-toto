@@ -43,7 +43,5 @@ jobs:
         uses: testifysec/witness-run-action@v0.1.2
         with:
           step: install
-          enable-archivista: true
-          enable-sigstore: true
           product-exclude-glob: '{web/node_modules/**,node_modules/**}'
           command: witness version
