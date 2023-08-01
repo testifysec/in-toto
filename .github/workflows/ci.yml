@@ -37,3 +37,17 @@ jobs:
 
       - name: Run tox
         run: tox -e ${{ matrix.toxenv }}
+      # Checkout witness repository and run tests
+      - name: Checkout witness/in-toto-witness branch
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 
+        with:
+          repository: 'witness/in-toto-witness'
+          ref: 'in-toto-witness'
+
+      - name: Run Witness
+        run: ./in-toto-witness.sh
+        working-directory: ./in-toto-witness
+
+      - name: Verify it Witness was installed
+        run: ./witness version
+        working-directory: ./in-toto-witness
