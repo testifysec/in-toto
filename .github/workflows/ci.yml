@@ -38,10 +38,36 @@ jobs:
       - name: Run tox
         run: tox -e ${{ matrix.toxenv }}
 
-      # Checkout witness repository and run tests
       - name: witness install
         uses: testifysec/witness-run-action@v0.1.2
         with:
           step: install
-          product-exclude-glob: '{web/node_modules/**,node_modules/**}'
+          enable-archivista: true
+          enable-sigstore: true
+          #product-exclude-glob: '{web/node_modules/**,node_modules/**}'
           command: witness version
+
+      # TODO: it would be really nice if below the repeated configs could just be defined once?
+      - name: witness build
+        uses: testifysec/witness-run-action@v0.1.2
+        with:
+          step: build
+          enable-archivista: true
+          enable-sigstore: true
+          command: witness version
+
+      # - name: witness lint
+      #   uses: testifysec/witness-run-action@v0.1.2
+      #   with:
+      #     step: lint
+      #     enable-archivista: true
+      #     enable-sigstore: true
+      #     command: npm run lint:web
+
+      # - name: witness test
+      #   uses: testifysec/witness-run-action@v0.1.2
+      #   with:
+      #     step: test
+      #     enable-archivista: true
+      #     enable-sigstore: true
+      #     command: npm run test:web
