@@ -16,6 +16,6 @@ jobs:
           uses: testifysec/witness-run-action@v0.1
           with:
             step: test
-            use-archivista: false
-            use-sigstore: false
+            enable-sigstore: false
+            enable-archivista: false
             command: touch hello.txt
