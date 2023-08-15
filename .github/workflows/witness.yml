@@ -49,8 +49,8 @@ jobs:
         uses: testifysec/witness-run-action@v0.1.2
         with:
           step: install
-          enable-archivista: true
-          enable-sigstore: true
+          enable-archivista: false
+          enable-sigstore: false
           product-exclude-glob: '{web/node_modules/**,node_modules/**}'
           command: npm ci
   
@@ -59,20 +59,20 @@ jobs:
         uses: testifysec/witness-run-action@v0.1.2
         with:
           step: build
-          enable-archivista: true
-          enable-sigstore: true
+          enable-archivista: false
+          enable-sigstore: false
           command: npm run build:web
       - name: witness lint
         uses: testifysec/witness-run-action@v0.1.2
         with:
           step: lint
-          enable-archivista: true
-          enable-sigstore: true
+          enable-archivista: false
+          enable-sigstore: false
           command: npm run lint:web
       - name: witness test
         uses: testifysec/witness-run-action@v0.1.2
         with:
           step: test
-          enable-archivista: true
-          enable-sigstore: true
+          enable-archivista: false
+          enable-sigstore: false
           command: npm run test:web
