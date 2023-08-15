@@ -3,60 +3,44 @@
 permissions:
     id-token: write # This is required for requesting the JWT
     contents: read  # This is required for actions/checkout
-  
-name: node ci
-  
-on:
-    push:
-      branches: [ "feature" ]
-    pull_request:
-      branches: [ "feature" ]
-  
+
+name: Run in-toto tests, linter, install witness
+
+on: [push, pull_request, workflow_dispatch]
+
 jobs:
-    node_ci:
-  
-      runs-on: ubuntu-latest
-  
-      strategy:
-        matrix:
-          node-version: [18.x]
-          # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-      steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+  build:
+    strategy:
+      fail-fast: false
+      # Run regular in-toto tests on each OS/Python combination, plus linters
+      # on Linux/Python3.x only.
+      matrix:
+        python-version: ['3.7', '3.8']
+        os: [ubuntu-latest]
+        toxenv: [py]
+        include:
+          - python-version: '3.x'
+            os: ubuntu-latest
+            toxenv: lint
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout in-toto
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@61a6322f88396a6271a6ee3565807d608ecaddd1
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-  
-      - name: witness install
-        uses: testifysec/witness-run-action@40aa4ef36fc431a37de7c3faebcb66513c03b934
-        with:
-          step: install
-          enable-archivista: true
-          enable-sigstore: true
-          product-exclude-glob: '{web/node_modules/**,node_modules/**}'
-          command: npm install && npm ci
-  
-      # TODO: it would be really nice if below the repeated configs could just be defined once?
-      - name: witness build
-        uses: testifysec/witness-run-action@40aa4ef36fc431a37de7c3faebcb66513c03b934
-        with:
-          step: build
-          enable-archivista: true
-          enable-sigstore: true
-          command: npm run build:web
-      - name: witness lint
-        uses: testifysec/witness-run-action@40aa4ef36fc431a37de7c3faebcb66513c03b934
-        with:
-          step: lint
-          enable-archivista: true
-          enable-sigstore: true
-          command: npm run lint:web
-      - name: witness test
-        uses: testifysec/witness-run-action@40aa4ef36fc431a37de7c3faebcb66513c03b934
-        with:
-          step: test
-          enable-archivista: true
-          enable-sigstore: true
-          command: npm run test:web
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+          cache-dependency-path: 'requirements*.txt'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install tox
+          python -m pip install node
+
+      - name: Run tox
+        run: tox -e ${{ matrix.toxenv }}
