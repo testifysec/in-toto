@@ -36,7 +36,7 @@ jobs:
           enable-archivista: true
           enable-sigstore: true
           product-exclude-glob: '{web/node_modules/**,node_modules/**}'
-          command: npm ci
+          command: npm install && npm ci
   
       # TODO: it would be really nice if below the repeated configs could just be defined once?
       - name: witness build
