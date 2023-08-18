@@ -15,7 +15,7 @@ jobs:
       # Run regular in-toto tests on each OS/Python combination, plus linters
       # on Linux/Python3.x only.
       matrix:
-        python-version: ['3.7', '3.8']
+        python-version: ['3.7']
         os: [ubuntu-latest]
         toxenv: [py]
         include:
@@ -53,4 +53,7 @@ jobs:
           enable-sigstore: true
           command: hatch build
 
-          
+      - name: Install witness policy tool
+        uses: jaxxstorm/action-install-gh-release@v1.10.0
+        with: # Grab the latest version
+          repo: https://github.com/testifysec/policy-tool/releases
