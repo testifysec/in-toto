@@ -56,6 +56,6 @@ jobs:
       - name: Download witness policy tool
         uses: giantswarm/install-binary-action@v1.1.0
         with:
-          binary: "source code"
-          version: "0.3.0"
-          download_url: "https://github.com/testifysec/policy-tool/archive/refs/tags/${version}.tar.gz"
+          binary: "policy-tool"
+          version: "v0.3.0"
+          download_url: "https://github.com/testifysec/${binary}/archive/refs/tags/${version}.tar.gz"
