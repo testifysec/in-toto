@@ -53,10 +53,19 @@ jobs:
           enable-sigstore: true
           command: hatch build
 
-      - name: Download witness policy tool
-        uses: giantswarm/install-binary-action@v1.1.0
-        with:
-          binary: "policy-tool"
-          version: "v0.3.0"
-          download_url: "https://github.com/testifysec/${binary}/archive/refs/tags/${version}.tar"
-          tarball_binary_path: "*/src/policy-tool-0.3.0"
+      - name: Install Witness Policy Tool
+        uses: jaxxstorm/action-install-gh-release@v1.10.0
+        with: # Grab a pure binary
+          repo: testifysec/policy-tool/
+          tag: v0.3.0
+          extension-matching: disable
+          rename-to: policy-tool
+          chmod: 0755
+
+      # - name: Download witness policy tool
+      #   uses: giantswarm/install-binary-action@v1.1.0
+      #   with:
+      #     binary: "policy-tool"
+      #     version: "v0.3.0"
+      #     download_url: "https://github.com/testifysec/${binary}/archive/refs/tags/${version}.tar"
+      #     tarball_binary_path: "*/src/policy-tool-0.3.0"
