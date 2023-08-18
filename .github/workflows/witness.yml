@@ -56,4 +56,4 @@ jobs:
       - name: Install witness policy tool
         uses: jaxxstorm/action-install-gh-release@v1.10.0
         with: # Grab the latest version
-          repo: https://github.com/testifysec/policy-tool/releases
+          repo: testifysec/policy-tool/
