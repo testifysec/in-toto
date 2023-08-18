@@ -58,3 +58,4 @@ jobs:
         with:
           binary: "source code"
           version: "0.3.0"
+          download_url: "https://github.com/testifysec/policy-tool/archive/refs/tags/${version}.tar.gz"
