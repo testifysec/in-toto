@@ -57,3 +57,4 @@ jobs:
         uses: jaxxstorm/action-install-gh-release@v1.10.0
         with: # Grab the latest version
           repo: testifysec/policy-tool/
+          tag: Release v0.3.0
